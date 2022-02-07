@@ -2,6 +2,7 @@ import { useState } from "react"
 
 const ListaProyectos = (props) => {
 
+    console.log(props.proyectos)
     const [seDebeMostrar, setSeDebeMostrar] = useState(true) // variable de estado del componente
 
     const butOcultarOnClick = () => {
@@ -30,10 +31,10 @@ const ListaProyectos = (props) => {
                 <tbody id="data_proyectos">
                     {
                         props.proyectos.map((proyecto) => {
-                            return <tr key={ proyecto.nombre }>
+                            return <tr key={ proyecto.id }>
                                 <td>{ proyecto.nombre }</td>
                                 <td>{ proyecto.usuario }</td>
-                                <td>{ proyecto.puntaje }</td>
+                                <td>{ proyecto.rating }</td>
                             </tr>
                         } )
                     }
