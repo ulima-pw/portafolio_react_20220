@@ -16,9 +16,8 @@ const FormularioLogin = (props) => {
     }
 
     const butLoginOnClick = () => {
-        console.log(`Username: ${txtUsername}`)
-        console.log(`Password: ${txtPassword}`)
-        
+        // Se va a ejecutar la funcion que se paso por el props (onLogin)
+        props.onLogin(txtUsername, txtPassword)
     }
 
     return <aside className="col-md-4">
@@ -40,6 +39,14 @@ const FormularioLogin = (props) => {
                             onClick={ butLoginOnClick }>Login</button>
                     <a href="#">Registro</a>
                 </form>
+                
+                {
+                    (() => {
+                        if (props.error) {
+                            return <div className="alert alert-danger mt-2">Error en login</div>
+                        }
+                    })()
+                }
             </div>
         </div>
     </aside>

@@ -3,6 +3,7 @@ import Banner from "../components/banner.component";
 import ListaProyectos from "../components/lista_proyectos.component";
 import FormularioLogin from "../components/formulario_login.component";
 import Footer from "../components/footer.component";
+import { useState } from "react";
 
 export default function Home() {
     const listadoProyectos = [
@@ -11,6 +12,18 @@ export default function Home() {
         {nombre : "Proyecto 3", usuario: "jorge", puntaje : 4.4},
         {nombre : "Proyecto 4", usuario: "kory", puntaje : 4.3}
     ]
+
+    const [errorLogin, setErrorLogin] = useState(false)
+
+    const loginHandler = (username, password) => {
+        if (username == "billy" && password == "123") {
+            location.href = "/main"
+        }else {
+            console.log("Error en login")
+            setErrorLogin(true)
+        }
+    }
+
     return <div>
         <div>
             <header>
@@ -22,7 +35,7 @@ export default function Home() {
             <Banner />
             <div className="row mt-4">
                 <ListaProyectos proyectos={ listadoProyectos } />
-                <FormularioLogin />
+                <FormularioLogin onLogin={ loginHandler } error={ errorLogin }/>
             </div>
         </div>
         <Footer />
