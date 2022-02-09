@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { guardarProyecto, obtenerProyectos } from "../dao/proyectos"
+import { eliminarProyecto, guardarProyecto, obtenerProyectos } from "../dao/proyectos"
 import Footer from "../components/footer.component"
 import ListaProyectos from "../components/lista_proyectos.component"
 import MenuNavegacion from "../components/menu_navegacion.component"
@@ -29,6 +29,11 @@ function MainPage() {
         setDebeMostrarModal(false)
     }
 
+    const eliminarProyectoHandler = (id) => {
+        eliminarProyecto(id)
+        setListadoProyectos(obtenerProyectos())
+    }
+
     return <div>
         <h1>Main Page</h1>
         <MenuNavegacion />
@@ -38,7 +43,8 @@ function MainPage() {
                 Nuevo
             </button>
         </div>
-        <ListaProyectos proyectos={ listadoProyectos } />
+        <ListaProyectos proyectos={ listadoProyectos } modo={ "crud" }
+            onEliminarProyecto={ eliminarProyectoHandler }/>
         <Footer />
         <ProyectoModal mostrar={ debeMostrarModal } 
             ocultar={ onModalClose } onGuardarProyecto={ guardarProyectoHandler }/>

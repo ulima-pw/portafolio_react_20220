@@ -31,4 +31,28 @@ const obtenerProyectos = () => {
     }
 }
 
-export  { guardarProyecto, obtenerProyectos }
+const eliminarProyecto = (id) => {
+    const proyectosStr = localStorage.getItem("proyectos")
+    if (proyectosStr != null) {
+        const proyectos = JSON.parse(proyectosStr)
+
+        let posicion = 0;
+        let posicionEncontrada = -1;
+        for (let proyecto of proyectos) {
+            if (proyecto.id == id) {
+                posicionEncontrada = posicion
+                break
+            }
+            posicion++;
+        }
+        
+        if (posicionEncontrada >= 0) {
+            proyectos.splice(posicionEncontrada, 1)
+
+            localStorage.setItem("proyectos", JSON.stringify(proyectos))
+        }
+        
+    }
+}
+
+export  { guardarProyecto, obtenerProyectos, eliminarProyecto }

@@ -51,7 +51,7 @@ export default function Home() {
         <div className="mt-4">
             <Banner images={ listaImagenes }/>
             <div className="row mt-4">
-                <ListaProyectos proyectos={ listadoProyectos } />
+                <ListaProyectos proyectos={ listadoProyectos } modo={ "lista" }/>
                 <FormularioLogin onLogin={ loginHandler } error={ errorLogin }/>
             </div>
         </div>
