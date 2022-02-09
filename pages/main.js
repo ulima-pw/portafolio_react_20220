@@ -1,11 +1,17 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { guardarProyecto, obtenerProyectos } from "../dao/proyectos"
 import Footer from "../components/footer.component"
 import ListaProyectos from "../components/lista_proyectos.component"
 import MenuNavegacion from "../components/menu_navegacion.component"
 import ProyectoModal from "../components/proyecto_modal.component"
 
 function MainPage() {
-    const [debeMostrarModal, setDebeMostrarModal] = useState(false) 
+    const [debeMostrarModal, setDebeMostrarModal] = useState(false)
+    const [listadoProyectos, setListadoProyectos] = useState([])
+
+    useEffect(() => {
+        setListadoProyectos(obtenerProyectos())
+    }, [])
 
     const butNuevoOnClick = () => {
         setDebeMostrarModal(true)
@@ -17,9 +23,9 @@ function MainPage() {
 
     const guardarProyectoHandler = (nombreProyecto, usuario, rating) => {
         console.log("Va a encargarse de guarddar un proyecto en la bd")
-        console.log(nombreProyecto)
-        console.log(usuario)
-        console.log(rating)
+        guardarProyecto(nombreProyecto, usuario, rating)
+        setListadoProyectos(obtenerProyectos())
+        //location.reload()
         setDebeMostrarModal(false)
     }
 
@@ -32,7 +38,7 @@ function MainPage() {
                 Nuevo
             </button>
         </div>
-        <ListaProyectos proyectos={[]} />
+        <ListaProyectos proyectos={ listadoProyectos } />
         <Footer />
         <ProyectoModal mostrar={ debeMostrarModal } 
             ocultar={ onModalClose } onGuardarProyecto={ guardarProyectoHandler }/>
