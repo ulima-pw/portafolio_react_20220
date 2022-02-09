@@ -55,4 +55,33 @@ const eliminarProyecto = (id) => {
     }
 }
 
-export  { guardarProyecto, obtenerProyectos, eliminarProyecto }
+const obtenerProyecto = (id) => {
+    const proyectosStr = localStorage.getItem("proyectos")
+    if (proyectosStr != null) {
+        const proyectos = JSON.parse(proyectosStr)
+        for (let proyecto of proyectos) {
+            if (proyecto.id == id) {
+                return proyecto
+            }
+        }
+    }
+    return null
+}
+
+const modificarProyecto = (proyecto) => {
+    const proyectosStr = localStorage.getItem("proyectos")
+    if (proyectosStr != null) {
+        const proyectos = JSON.parse(proyectosStr)
+        for (let proy of proyectos) {
+            if (proyecto.id == proy.id) {
+                proy.nombre = proyecto.nombre
+                proy.usuario = proyecto.usuario
+                proy.rating = proyecto.rating
+                break
+            }
+        }
+        localStorage.setItem("proyectos", JSON.stringify(proyectos))
+    }
+}
+
+export  { guardarProyecto, obtenerProyectos, eliminarProyecto, obtenerProyecto, modificarProyecto }

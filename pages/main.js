@@ -8,12 +8,14 @@ import ProyectoModal from "../components/proyecto_modal.component"
 function MainPage() {
     const [debeMostrarModal, setDebeMostrarModal] = useState(false)
     const [listadoProyectos, setListadoProyectos] = useState([])
+    const [modoFormulario, setModoFormulario] = useState("nuevo") // modo: nuevo | edicion
 
     useEffect(() => {
         setListadoProyectos(obtenerProyectos())
     }, [])
 
     const butNuevoOnClick = () => {
+        setModoFormulario("nuevo")
         setDebeMostrarModal(true)
     }
 
@@ -34,6 +36,11 @@ function MainPage() {
         setListadoProyectos(obtenerProyectos())
     }
 
+    const editarProyectoModalHandler = (id) => {
+        setModoFormulario("edicion")
+        setDebeMostrarModal(true)
+    }
+
     return <div>
         <h1>Main Page</h1>
         <MenuNavegacion />
@@ -44,10 +51,12 @@ function MainPage() {
             </button>
         </div>
         <ListaProyectos proyectos={ listadoProyectos } modo={ "crud" }
-            onEliminarProyecto={ eliminarProyectoHandler }/>
+            onEliminarProyecto={ eliminarProyectoHandler }
+            onEditarProyecto={ editarProyectoModalHandler }/>
         <Footer />
         <ProyectoModal mostrar={ debeMostrarModal } 
-            ocultar={ onModalClose } onGuardarProyecto={ guardarProyectoHandler }/>
+            ocultar={ onModalClose } onGuardarProyecto={ guardarProyectoHandler }
+            modo={ modoFormulario }/>
     </div>
 }
 

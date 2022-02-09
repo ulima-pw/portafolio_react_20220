@@ -69,7 +69,10 @@ const ListaProyectos = (props) => {
                                 <td>{proyecto.usuario}</td>
                                 <td>{proyecto.rating}</td>
                                 <td>
-                                    <button type="button" className="btn btn-link">
+                                    <button type="button" className="btn btn-link"
+                                        onClick={ ()=> {
+                                            props.onEditarProyecto(proyecto.id)
+                                        }}>
                                         Editar
                                     </button>
                                     <button type="button" className="btn btn-link"
