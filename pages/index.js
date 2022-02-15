@@ -4,6 +4,7 @@ import ListaProyectos from "../components/lista_proyectos.component";
 import FormularioLogin from "../components/formulario_login.component";
 import Footer from "../components/footer.component";
 import { useEffect, useState } from "react";
+import { Image } from "react-bootstrap";
 
 export default function Home() {
     // http://demo9667197.mockable.io/proyectos
@@ -21,7 +22,7 @@ export default function Home() {
 
     useEffect(async () => {
         // Llamada AJAX para cargar listado de proyectos
-        let response = await fetch("http://demo9667197.mockable.io/proyectos")
+        let response = await fetch("/api/proyectos")
         const data = await response.json()
         setListadoProyectos(data.proyectos)
 
@@ -44,6 +45,7 @@ export default function Home() {
     return <div>
         <div>
             <header>
+                <Image className="logo" src="/images/logo_ulima.jpg" thumbnail={true}/>
                 <h1>Mi Portafolio</h1>
             </header>
             <MenuNavegacion />
