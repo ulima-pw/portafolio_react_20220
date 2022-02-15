@@ -26,7 +26,7 @@ export default function Home() {
         setListadoProyectos(data.proyectos)
 
         // Llamada AJAX para cargar lista de urls de imagenes
-        response = await fetch("http://demo9667197.mockable.io/")
+        response = await fetch("/api/imagenes")
         const dataImagenes = await response.json()
         setListaImagenes(dataImagenes.images)
 
