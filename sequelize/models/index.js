@@ -9,9 +9,6 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
-
-const models = process.cwd() + '/sequelize/models/' || __dirname;
-
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -31,7 +28,7 @@ if (config.use_env_variable) {
     db[model.name] = model;
   }); */
   
-const model = require("../models/proyecto")
+/*const model = require("../models/proyecto")
 
 db[model(sequelize, Sequelize.DataTypes).name] = model(sequelize, Sequelize.DataTypes);
 
@@ -39,8 +36,16 @@ Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
+});*/
+const files = require.context('./', false, /\.js$/i);
+files.keys().forEach(key => {
+  if(key.includes('index')){
+    return
+  }
+  console.log(key)
+  const model = files(key)(sequelize, Sequelize.DataTypes)
+  db[model.name] = model;
 });
-
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
