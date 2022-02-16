@@ -1,87 +1,30 @@
-const guardarProyecto = (nombreProyecto, usuario, rating) => {
-    const proyecto = {
-        id : 1,
-        nombre : nombreProyecto,
-        usuario : usuario,
+//import db from "../sequelize/models"
+const db = require("../sequelize/models")
+
+const guardarProyecto = async (nombre, usuario, rating) => {
+    // Insercion
+    const proyectoGuardado = await db.Proyecto.create({
+        nombre : nombre,
         rating : rating
-    }
+    })
 
-    const proyectosStr = localStorage.getItem("proyectos")
-
-    // [{"id" : 1, "nombre" : "sdfsdf", "usuario" : "wer2", "rating" : 4}, {}, {}]
-    if (proyectosStr != null) {
-        const proyectos = JSON.parse(proyectosStr)
-        const ultimoId = proyectos[proyectos.length - 1].id
-        proyecto.id = ultimoId + 1
-        proyectos.push(proyecto)
-
-        localStorage.setItem("proyectos", JSON.stringify(proyectos))
-    }else {
-        const proyectos = [proyecto]
-        localStorage.setItem("proyectos", JSON.stringify(proyectos))
-    }
+    return proyectoGuardado
 }
 
 const obtenerProyectos = () => {
-    const proyectosStr = localStorage.getItem("proyectos")
-    if (proyectosStr != null) {
-        return JSON.parse(proyectosStr)
-    }else {
-        return []
-    }
+
 }
 
 const eliminarProyecto = (id) => {
-    const proyectosStr = localStorage.getItem("proyectos")
-    if (proyectosStr != null) {
-        const proyectos = JSON.parse(proyectosStr)
 
-        let posicion = 0;
-        let posicionEncontrada = -1;
-        for (let proyecto of proyectos) {
-            if (proyecto.id == id) {
-                posicionEncontrada = posicion
-                break
-            }
-            posicion++;
-        }
-        
-        if (posicionEncontrada >= 0) {
-            proyectos.splice(posicionEncontrada, 1)
-
-            localStorage.setItem("proyectos", JSON.stringify(proyectos))
-        }
-        
-    }
 }
 
 const obtenerProyecto = (id) => {
-    const proyectosStr = localStorage.getItem("proyectos")
-    if (proyectosStr != null) {
-        const proyectos = JSON.parse(proyectosStr)
-        for (let proyecto of proyectos) {
-            if (proyecto.id == id) {
-                return proyecto
-            }
-        }
-    }
-    return null
+
 }
 
 const modificarProyecto = (proyecto) => {
-    const proyectosStr = localStorage.getItem("proyectos")
-    if (proyectosStr != null) {
-        const proyectos = JSON.parse(proyectosStr)
-        for (let proy of proyectos) {
-            if (proyecto.id == proy.id) {
-                proy.nombre = proyecto.nombre
-                proy.usuario = proyecto.usuario
-                proy.rating = proyecto.rating
-                break
-            }
-        }
-        localStorage.setItem("proyectos", JSON.stringify(proyectos))
-    }
+
 }
 
-export  { guardarProyecto, obtenerProyectos, eliminarProyecto, obtenerProyecto, modificarProyecto }
+export { guardarProyecto, obtenerProyectos, eliminarProyecto, obtenerProyecto, modificarProyecto }
