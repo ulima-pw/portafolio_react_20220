@@ -5,7 +5,7 @@ const proyectosHandler = async (req, res) => {
     if (req.method == "GET") {
         // Consultar en la base de datos
         // Devolver la respuesta
-        const proyectos = obtenerProyectos()
+        const proyectos = await obtenerProyectos()
         console.log(proyectos)
 
         res.json({
