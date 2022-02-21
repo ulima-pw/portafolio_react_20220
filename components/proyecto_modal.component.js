@@ -1,10 +1,14 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Modal, Button } from "react-bootstrap"
 
 const ProyectoModal = (props) => {
-    const [txtNombreProyecto, setTxtNombreProyecto] = useState("")
+    const [txtNombreProyecto, setTxtNombreProyecto] = useState(
+        props.proyecto == null ? "" : props.proyecto.nombre
+    )
     const [txtUsuario, setTxtUsuario] = useState("")
-    const [txtRating, setTxtRating] = useState(0)
+    const [txtRating, setTxtRating] = useState(
+        props.proyecto == null ? 0 : props.proyecto.rating
+    )
 
     const txtNombreProyectoOnChange = (event) => {
         setTxtNombreProyecto(event.target.value)
@@ -21,7 +25,6 @@ const ProyectoModal = (props) => {
     const butGuardarOnClick = () => {
         props.onGuardarProyecto(txtNombreProyecto, txtUsuario, txtRating)
     }
-
 
     return <Modal show={ props.mostrar } 
                 onHide={ props.ocultar }>

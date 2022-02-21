@@ -8,6 +8,7 @@ function MainPage() {
     const [debeMostrarModal, setDebeMostrarModal] = useState(false)
     const [listadoProyectos, setListadoProyectos] = useState([])
     const [modoFormulario, setModoFormulario] = useState("nuevo") // modo: nuevo | edicion
+    const [proyecto, setProyecto] = useState(null)
 
     const obtenerProyectosHTTP = async () => {
         let response = await fetch("/api/proyectos")
@@ -70,9 +71,13 @@ function MainPage() {
         }
     }
 
-    const editarProyectoModalHandler = (id) => {
+    const editarProyectoModalHandler = async (id) => {
+        const resp = await fetch(`/api/proyectos/${id}`)
+        const data = await resp.json()
+
         setModoFormulario("edicion")
         setDebeMostrarModal(true)
+        setProyecto(data.proyecto)
     }
 
     return <div>
@@ -88,9 +93,9 @@ function MainPage() {
             onEliminarProyecto={ eliminarProyectoHandler }
             onEditarProyecto={ editarProyectoModalHandler }/>
         <Footer />
-        <ProyectoModal mostrar={ debeMostrarModal } 
+        <ProyectoModal mostrar={ debeMostrarModal }
             ocultar={ onModalClose } onGuardarProyecto={ guardarProyectoHandler }
-            modo={ modoFormulario }/>
+            modo={ modoFormulario } proyecto={ proyecto } />
     </div>
 }
 
