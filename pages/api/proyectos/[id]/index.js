@@ -1,4 +1,4 @@
-import { eliminarProyecto } from "../../../../dao/proyectos"
+import { eliminarProyecto, obtenerProyecto } from "../../../../dao/proyectos"
 
 // Path: /api/proyectos/[id]
 const proyectosIdHandler = async (req, res) => {
@@ -8,6 +8,13 @@ const proyectosIdHandler = async (req, res) => {
         await eliminarProyecto(data.id)
         res.json({
             msg: ""
+        })
+    }else if (req.method == "GET") {
+        const data = req.query
+        const proyecto = await obtenerProyecto(data.id)
+        res.json({
+            msg: "",
+            proyecto : proyecto
         })
     }
 }

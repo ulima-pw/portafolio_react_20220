@@ -26,12 +26,25 @@ const eliminarProyecto = async (id) => {
     })
 }
 
-const obtenerProyecto = (id) => {
-
+const obtenerProyecto = async (id) => {
+    // Query por un proyecto de determinado id
+    const proyecto = await db.Proyecto.findOne({
+        where : {
+            id : id
+        }
+    })
+    return proyecto
 }
 
-const modificarProyecto = (proyecto) => {
+const modificarProyecto = async (proyecto) => {
+    // Proyecto que queremos modificar
+    const proyectoAModificar = await obtenerProyecto(proyecto.id)
+    
+    proyectoAModificar.nombre =proyecto.nombre
+    proyectoAModificar.rating = proyecto.rating
 
+    // Actualizamos proyecto en la bd
+    await proyectoAModificar.save()
 }
 
 export { guardarProyecto, obtenerProyectos, eliminarProyecto, obtenerProyecto, modificarProyecto }
