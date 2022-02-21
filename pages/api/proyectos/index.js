@@ -6,7 +6,6 @@ const proyectosHandler = async (req, res) => {
         // Consultar en la base de datos
         // Devolver la respuesta
         const proyectos = await obtenerProyectos()
-        console.log(proyectos)
 
         res.json({
             msg: "",
@@ -15,7 +14,7 @@ const proyectosHandler = async (req, res) => {
     }else if (req.method == "POST") {
         // Registrar en la base de datos
         console.log("Se deberia guardar en la base de datos")
-        const data = req.body
+        const data = JSON.parse(req.body)
         await guardarProyecto(data.nombre, "billy", data.rating)
         res.json({
             msg: ""

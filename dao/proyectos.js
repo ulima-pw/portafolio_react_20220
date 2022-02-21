@@ -17,8 +17,13 @@ const obtenerProyectos = async () => {
     return proyectos
 }
 
-const eliminarProyecto = (id) => {
-
+const eliminarProyecto = async (id) => {
+    // Delete a la tabla Proyecto
+    await db.Proyecto.destroy({
+        where : {
+            id : id
+        }
+    })
 }
 
 const obtenerProyecto = (id) => {
