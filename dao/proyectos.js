@@ -11,8 +11,10 @@ const guardarProyecto = async (nombre, usuario, rating) => {
     return proyectoGuardado
 }
 
-const obtenerProyectos = () => {
-
+const obtenerProyectos = async () => {
+    // Query
+    const proyectos = await db.Proyecto.findAll()
+    return proyectos
 }
 
 const eliminarProyecto = (id) => {

@@ -1,18 +1,16 @@
-import { guardarProyecto } from "../../../dao/proyectos"
+import { guardarProyecto, obtenerProyectos } from "../../../dao/proyectos"
 
 // Path : /api/proyectos
 const proyectosHandler = async (req, res) => {
     if (req.method == "GET") {
         // Consultar en la base de datos
         // Devolver la respuesta
-
+        const proyectos = obtenerProyectos()
+        console.log(proyectos)
 
         res.json({
             msg: "",
-            proyectos : [
-                {"id" : 1, "nombre": "Proyecto de Prueba A", "usuario" : "billy", "rating" : 4.7},
-                {"id" : 2, "nombre": "Proyecto B", "usuario" : "lionel", "rating" : 4.5}
-            ]
+            proyectos : proyectos
         })
     }else if (req.method == "POST") {
         // Registrar en la base de datos
