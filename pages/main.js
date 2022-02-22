@@ -56,6 +56,28 @@ function MainPage() {
         
     }
 
+    const actualizarProyectoHandler = async (id, nombreProyecto, usuario, rating) => {
+        const proyecto = {
+            id : id,
+            nombre : nombreProyecto,
+            usuario : usuario,
+            rating : rating
+        }
+
+        // peticion a backend para agregar un nuevo proyecto
+        const resp = await fetch("/api/proyectos", {
+            method : "PUT",
+            body : JSON.stringify(proyecto)
+        })
+        const data = await resp.json()
+
+        if (data.msg == "") {
+            setDebeMostrarModal(false)
+            const dataProyectos = await obtenerProyectosHTTP()
+            setListadoProyectos(dataProyectos.proyectos)
+        }
+    }
+
     const eliminarProyectoHandler = async (id) => {
 
         // 1. Hacer peticion HTTP delete al servidor /api/proyectos/id
@@ -72,12 +94,14 @@ function MainPage() {
     }
 
     const editarProyectoModalHandler = async (id) => {
+        // Peticion HTTP para obtener un proyecto de determinado id
         const resp = await fetch(`/api/proyectos/${id}`)
         const data = await resp.json()
 
+        setProyecto(data.proyecto)
         setModoFormulario("edicion")
         setDebeMostrarModal(true)
-        setProyecto(data.proyecto)
+        
     }
 
     return <div>
@@ -95,6 +119,7 @@ function MainPage() {
         <Footer />
         <ProyectoModal mostrar={ debeMostrarModal }
             ocultar={ onModalClose } onGuardarProyecto={ guardarProyectoHandler }
+            onActualizarProyecto={ actualizarProyectoHandler }
             modo={ modoFormulario } proyecto={ proyecto } />
     </div>
 }

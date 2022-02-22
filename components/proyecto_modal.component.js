@@ -2,13 +2,18 @@ import { useState, useEffect } from "react"
 import { Modal, Button } from "react-bootstrap"
 
 const ProyectoModal = (props) => {
-    const [txtNombreProyecto, setTxtNombreProyecto] = useState(
-        props.proyecto == null ? "" : props.proyecto.nombre
-    )
+    const [idProyecto, setIdProyecto] = useState(0)
+    const [txtNombreProyecto, setTxtNombreProyecto] = useState("")
     const [txtUsuario, setTxtUsuario] = useState("")
-    const [txtRating, setTxtRating] = useState(
-        props.proyecto == null ? 0 : props.proyecto.rating
-    )
+    const [txtRating, setTxtRating] = useState(0)
+
+    useEffect(() => {
+        if (props.proyecto != null) {
+            setIdProyecto(props.proyecto.id)
+            setTxtNombreProyecto(props.proyecto.nombre)
+            setTxtRating(props.proyecto.rating)
+        }
+    }, [props.proyecto])
 
     const txtNombreProyectoOnChange = (event) => {
         setTxtNombreProyecto(event.target.value)
@@ -23,7 +28,11 @@ const ProyectoModal = (props) => {
     }
 
     const butGuardarOnClick = () => {
-        props.onGuardarProyecto(txtNombreProyecto, txtUsuario, txtRating)
+        if (props.modo == "edicion") {
+            props.onActualizarProyecto(idProyecto, txtNombreProyecto, txtUsuario, txtRating)
+        } else {
+            props.onGuardarProyecto(txtNombreProyecto, txtUsuario, txtRating)
+        }
     }
 
     return <Modal show={ props.mostrar } 

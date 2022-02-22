@@ -13,7 +13,11 @@ const guardarProyecto = async (nombre, usuario, rating) => {
 
 const obtenerProyectos = async () => {
     // Query
-    const proyectos = await db.Proyecto.findAll()
+    const proyectos = await db.Proyecto.findAll({
+        order : [
+            ["id", "DESC"]
+        ]
+    })
     return proyectos
 }
 
