@@ -27,6 +27,7 @@ npx sequelize db:create
 npx sequelize model:generate --name Proyecto --attributes nombre:string,rating:float
 npx sequelize db:migrate
 npx sequelize model:generate --name Usuario --attributes nombre:string,username:string,password:string
+npx sequelize seed:generate --name data_inicial_usuarios
 ````
 
 ## More
