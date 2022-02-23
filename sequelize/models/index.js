@@ -33,9 +33,13 @@ if (config.use_env_variable) {
   
 const model = require("../models/proyecto")
 const modelUsuario = require("../models/usuario")
+const modelTecnologia = require("../models/tecnologia")
+const modelProductoXTecnologia = require("./proyectoxtecnologia")
 
 db[model(sequelize, Sequelize.DataTypes).name] = model(sequelize, Sequelize.DataTypes);
 db[modelUsuario(sequelize, Sequelize.DataTypes).name] = modelUsuario(sequelize, Sequelize.DataTypes);
+db[modelTecnologia(sequelize, Sequelize.DataTypes).name] = modelTecnologia(sequelize, Sequelize.DataTypes);
+db[modelProductoXTecnologia(sequelize, Sequelize.DataTypes).name] = modelProductoXTecnologia(sequelize, Sequelize.DataTypes);
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
