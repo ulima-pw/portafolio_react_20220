@@ -29,15 +29,27 @@ const ProyectoModal = (props) => {
     }
 
     const butGuardarOnClick = () => {
+
         if (props.modo == "edicion") {
             props.onActualizarProyecto(idProyecto, txtNombreProyecto, txtUsuario, txtRating)
+            
         } else {
             props.onGuardarProyecto(txtNombreProyecto, txtUsuario, txtRating)
         }
+        setTxtNombreProyecto("")
+        setTxtUsuario(0)
+        setTxtRating(0)
+    }
+
+    const butCloseFormOnClick = () => {
+        setTxtNombreProyecto("")
+        setTxtUsuario(0)
+        setTxtRating(0)
+        props.ocultar()
     }
 
     return <Modal show={ props.mostrar } 
-                onHide={ props.ocultar }>
+                onHide={ butCloseFormOnClick }>
         <Modal.Header closeButton>
             <Modal.Title>Formulario Proyecto</Modal.Title>
         </Modal.Header>
