@@ -5,6 +5,7 @@ const guardarProyecto = async (nombre, usuario, rating) => {
     // Insercion
     const proyectoGuardado = await db.Proyecto.create({
         nombre : nombre,
+        idusuario : usuario,
         rating : rating
     })
 
@@ -45,6 +46,7 @@ const modificarProyecto = async (proyecto) => {
     const proyectoAModificar = await obtenerProyecto(proyecto.id)
     
     proyectoAModificar.nombre =proyecto.nombre
+    proyectoAModificar.idusuario = proyecto.usuario
     proyectoAModificar.rating = proyecto.rating
 
     // Actualizamos proyecto en la bd

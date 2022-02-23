@@ -1,4 +1,5 @@
 import { guardarProyecto, modificarProyecto, obtenerProyectos } from "../../../dao/proyectos"
+import { obtenerUsuario } from "../../../dao/usuarios"
 
 // Path : /api/proyectos
 const proyectosHandler = async (req, res) => {
@@ -7,15 +8,29 @@ const proyectosHandler = async (req, res) => {
         // Devolver la respuesta
         const proyectos = await obtenerProyectos()
 
+        const proyectosConUsername = []
+        for (let proyecto of proyectos) {
+            const usuario = await obtenerUsuario(proyecto.idusuario)
+            proyectosConUsername.push({
+                id: proyecto.id,
+                nombre: proyecto.nombre,
+                idusuario: proyecto.idusuario,
+                usuario : usuario == null ? "" : usuario.username,
+                rating: proyecto.rating,
+                createdAt: proyecto.createdAt,
+                updatedAt: proyecto.updatedAt
+            })
+        }
+
         res.json({
             msg: "",
-            proyectos : proyectos
+            proyectos : proyectosConUsername
         })
     }else if (req.method == "POST") {
         // Registrar en la base de datos
         console.log("Se deberia guardar en la base de datos")
         const data = JSON.parse(req.body)
-        await guardarProyecto(data.nombre, "billy", data.rating)
+        await guardarProyecto(data.nombre, data.usuario, data.rating)
         res.json({
             msg: ""
         })
@@ -23,7 +38,8 @@ const proyectosHandler = async (req, res) => {
         /*
         data {
             id : 123
-            nombre : "sdfdsf"
+            nombre : "sdfdsf",
+            usuario : 1,
             rating : "sdfs"
         }
         */

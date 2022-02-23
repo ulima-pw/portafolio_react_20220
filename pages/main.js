@@ -7,6 +7,7 @@ import ProyectoModal from "../components/proyecto_modal.component"
 function MainPage() {
     const [debeMostrarModal, setDebeMostrarModal] = useState(false)
     const [listadoProyectos, setListadoProyectos] = useState([])
+    const [listadoUsuarios, setListadoUsuarios] = useState([])
     const [modoFormulario, setModoFormulario] = useState("nuevo") // modo: nuevo | edicion
     const [proyecto, setProyecto] = useState(null)
 
@@ -16,10 +17,18 @@ function MainPage() {
         return data
     }
 
+    const obtenerUsuariosHTTP = async () => {
+        let response = await fetch("/api/usuarios")
+        const data = await response.json()
+        return data
+    }
+
     useEffect(async () => {
         // Hacemos una peticion al backend
         const data = await obtenerProyectosHTTP()
+        const dataUsuarios = await obtenerUsuariosHTTP()
         setListadoProyectos(data.proyectos)
+        setListadoUsuarios(dataUsuarios.usuarios)
     }, [])
 
     const butNuevoOnClick = () => {
@@ -120,7 +129,8 @@ function MainPage() {
         <ProyectoModal mostrar={ debeMostrarModal }
             ocultar={ onModalClose } onGuardarProyecto={ guardarProyectoHandler }
             onActualizarProyecto={ actualizarProyectoHandler }
-            modo={ modoFormulario } proyecto={ proyecto } />
+            modo={ modoFormulario } proyecto={ proyecto }
+            usuarios= { listadoUsuarios } />
     </div>
 }
 
