@@ -30,7 +30,7 @@ const proyectosHandler = async (req, res) => {
         // Registrar en la base de datos
         console.log("Se deberia guardar en la base de datos")
         const data = JSON.parse(req.body)
-        await guardarProyecto(data.nombre, data.usuario, data.rating)
+        await guardarProyecto(data.nombre, data.usuario, data.rating, data.tecnologias)
         res.json({
             msg: ""
         })
@@ -40,7 +40,8 @@ const proyectosHandler = async (req, res) => {
             id : 123
             nombre : "sdfdsf",
             usuario : 1,
-            rating : "sdfs"
+            rating : "sdfs",
+            tecnologias : [1, 3, 5]
         }
         */
         const data = JSON.parse(req.body)

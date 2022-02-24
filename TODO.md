@@ -8,11 +8,11 @@
  - Crear FKs
 
 - Implementar endpoints:
- - Obtener tecnologias
+ - [X] Obtener tecnologias
   - GET /api/tecnologias
- - Modificar el endpoint de registro de proyecto
- - Modificar el endpoint de actualizacion de proyecto
- - Modificar el endpoint de eliminacion de proyecto
+ - [X] Modificar el endpoint de registro de proyecto
+ - [X] Modificar el endpoint de actualizacion de proyecto
+ - [X] Modificar el endpoint de eliminacion de proyecto
  
  ## Frontend
 

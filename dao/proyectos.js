@@ -1,13 +1,22 @@
 //import db from "../sequelize/models"
 const db = require("../sequelize/models")
 
-const guardarProyecto = async (nombre, usuario, rating) => {
+
+const guardarProyecto = async (nombre, usuario, rating, tecnologias) => {
     // Insercion
     const proyectoGuardado = await db.Proyecto.create({
         nombre : nombre,
         idusuario : usuario,
         rating : rating
     })
+
+    // Registro de datos en la tabla intermedia
+    for (let idtecnologia of tecnologias) {
+        await db.ProyectoXTecnologia.create({
+            idproyecto : proyectoGuardado.id,
+            idtecnologia : idtecnologia
+        })
+    }
 
     return proyectoGuardado
 }
@@ -23,6 +32,13 @@ const obtenerProyectos = async () => {
 }
 
 const eliminarProyecto = async (id) => {
+    // Eliminar los proyectos de id en la tabla intermedia
+    await db.ProyectoXTecnologia.destroy({
+        where : {
+            idproyecto : id
+        }
+    })
+
     // Delete a la tabla Proyecto
     await db.Proyecto.destroy({
         where : {
@@ -42,6 +58,21 @@ const obtenerProyecto = async (id) => {
 }
 
 const modificarProyecto = async (proyecto) => {
+
+    // Eliminar todas las tecnologias de proyecto en tabla intermedia
+    await db.ProyectoXTecnologia.destroy({
+        where : {
+            idproyecto : proyecto.id
+        }
+    })
+
+    // Agregamos las nuevas tecnologias en tabla intermedia
+    for (let idtecnologia of proyecto.tecnologias) {
+        await db.ProyectoXTecnologia.create({
+            idproyecto : proyectoGuardado.id,
+            idtecnologia : idtecnologia
+        })
+    }
     // Proyecto que queremos modificar
     const proyectoAModificar = await obtenerProyecto(proyecto.id)
     
