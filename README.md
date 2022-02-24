@@ -31,6 +31,7 @@ npx sequelize seed:generate --name data_inicial_usuarios
 npx sequelize db:seed:all
 
 npx sequelize model:generate --name Tecnologia --attributes nombre:string
+npx sequelize model:generate --name ProductoXTecnologia --attributes idproducto:integer,idtecnologia:integer
 ````
 
 ## More

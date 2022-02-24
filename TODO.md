@@ -2,9 +2,9 @@
 
 ## Backend
 
-- Crear modelos sequelize (Tecnologia y ProductoXTecnologia)
-- Crear las migraciones:
- - Crear campos
+- [X] Crear modelos sequelize (Tecnologia y ProductoXTecnologia)
+- [X] Crear las migraciones:
+ - Crear campos X
  - Crear FKs
 
 - Implementar endpoints:
