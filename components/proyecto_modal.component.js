@@ -6,6 +6,7 @@ const ProyectoModal = (props) => {
     const [txtNombreProyecto, setTxtNombreProyecto] = useState("")
     const [txtUsuario, setTxtUsuario] = useState(0)
     const [txtRating, setTxtRating] = useState(0)
+    const [listaIdTecnologiasSeleccionadas, setListaIdTecnologiasSeleccionadas] = useState([])
 
     useEffect(() => {
         if (props.proyecto != null) {
@@ -28,13 +29,22 @@ const ProyectoModal = (props) => {
         setTxtRating(event.target.value)
     }
 
+    const listaTecnologiasOnChange = (event) => {
+        const listaIds = Array.from(event.target.selectedOptions).map((option) => {
+            return parseInt(option.value)
+        })
+        setListaIdTecnologiasSeleccionadas(listaIds)
+    }
+
     const butGuardarOnClick = () => {
 
         if (props.modo == "edicion") {
-            props.onActualizarProyecto(idProyecto, txtNombreProyecto, txtUsuario, txtRating)
+            props.onActualizarProyecto(idProyecto, txtNombreProyecto, 
+                txtUsuario, txtRating, listaIdTecnologiasSeleccionadas)
             
         } else {
-            props.onGuardarProyecto(txtNombreProyecto, txtUsuario, txtRating)
+            props.onGuardarProyecto(txtNombreProyecto, txtUsuario, 
+                txtRating, listaIdTecnologiasSeleccionadas)
         }
         setTxtNombreProyecto("")
         setTxtUsuario(0)
@@ -87,6 +97,21 @@ const ProyectoModal = (props) => {
                     <input className="form-control"
                         type="number" defaultValue={ txtRating }
                         onChange={ txtRatingOnChange }/>
+                </div>
+                <div>
+                    <label className="form-label">
+                        Tecnologias
+                    </label>
+                    <select className="form-select" defaultValue={ listaIdTecnologiasSeleccionadas } 
+                        onChange={ listaTecnologiasOnChange } multiple>
+                        {
+                            props.tecnologias.map((tecnologia) => {
+                                return <option value={ tecnologia.id }>
+                                    {tecnologia.nombre }
+                                </option>
+                            })
+                        }
+                    </select>
                 </div>
             </form>
         </Modal.Body>

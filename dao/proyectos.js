@@ -12,8 +12,9 @@ const guardarProyecto = async (nombre, usuario, rating, tecnologias) => {
 
     // Registro de datos en la tabla intermedia
     for (let idtecnologia of tecnologias) {
+        //TODO: Modificar el idproducto por idproyecto
         await db.ProyectoXTecnologia.create({
-            idproyecto : proyectoGuardado.id,
+            idproducto : proyectoGuardado.id,
             idtecnologia : idtecnologia
         })
     }
@@ -35,7 +36,7 @@ const eliminarProyecto = async (id) => {
     // Eliminar los proyectos de id en la tabla intermedia
     await db.ProyectoXTecnologia.destroy({
         where : {
-            idproyecto : id
+            idproducto : id
         }
     })
 
@@ -62,14 +63,15 @@ const modificarProyecto = async (proyecto) => {
     // Eliminar todas las tecnologias de proyecto en tabla intermedia
     await db.ProyectoXTecnologia.destroy({
         where : {
-            idproyecto : proyecto.id
+            idproducto : proyecto.id
         }
     })
 
     // Agregamos las nuevas tecnologias en tabla intermedia
     for (let idtecnologia of proyecto.tecnologias) {
+        // TODO: Modificar el idproducto por idproyecto
         await db.ProyectoXTecnologia.create({
-            idproyecto : proyectoGuardado.id,
+            idproducto : proyecto.id,
             idtecnologia : idtecnologia
         })
     }

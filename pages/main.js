@@ -8,6 +8,7 @@ function MainPage() {
     const [debeMostrarModal, setDebeMostrarModal] = useState(false)
     const [listadoProyectos, setListadoProyectos] = useState([])
     const [listadoUsuarios, setListadoUsuarios] = useState([])
+    const [listadoTecnologias, setListadoTecnologias] = useState([])
     const [modoFormulario, setModoFormulario] = useState("nuevo") // modo: nuevo | edicion
     const [proyecto, setProyecto] = useState(null)
 
@@ -23,12 +24,20 @@ function MainPage() {
         return data
     }
 
+    const obtenerTecnologiasHTTP = async () => {
+        let response = await fetch("/api/tecnologias")
+        const data = await response.json()
+        return data
+    }
+
     useEffect(async () => {
         // Hacemos una peticion al backend
         const data = await obtenerProyectosHTTP()
         const dataUsuarios = await obtenerUsuariosHTTP()
+        const dataTecnologias = await obtenerTecnologiasHTTP()
         setListadoProyectos(data.proyectos)
         setListadoUsuarios(dataUsuarios.usuarios)
+        setListadoTecnologias(dataTecnologias.tecnologias)
     }, [])
 
     const butNuevoOnClick = () => {
@@ -40,12 +49,13 @@ function MainPage() {
         setDebeMostrarModal(false)
     }
 
-    const guardarProyectoHandler = async (nombreProyecto, usuario, rating) => {
+    const guardarProyectoHandler = async (nombreProyecto, usuario, rating, tecnologias) => {
         console.log("Va a encargarse de guarddar un proyecto en la bd")
         const proyecto = {
             nombre : nombreProyecto,
             usuario : usuario,
-            rating : rating
+            rating : rating,
+            tecnologias : tecnologias
         }
 
         // peticion a backend para agregar un nuevo proyecto
@@ -65,12 +75,13 @@ function MainPage() {
         
     }
 
-    const actualizarProyectoHandler = async (id, nombreProyecto, usuario, rating) => {
+    const actualizarProyectoHandler = async (id, nombreProyecto, usuario, rating, tecnologias) => {
         const proyecto = {
             id : id,
             nombre : nombreProyecto,
             usuario : usuario,
-            rating : rating
+            rating : rating,
+            tecnologias : tecnologias
         }
 
         // peticion a backend para agregar un nuevo proyecto
@@ -130,7 +141,8 @@ function MainPage() {
             ocultar={ onModalClose } onGuardarProyecto={ guardarProyectoHandler }
             onActualizarProyecto={ actualizarProyectoHandler }
             modo={ modoFormulario } proyecto={ proyecto }
-            usuarios= { listadoUsuarios } />
+            usuarios= { listadoUsuarios }
+            tecnologias={ listadoTecnologias } />
     </div>
 }
 
