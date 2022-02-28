@@ -21,7 +21,7 @@ function MainPage() {
     const obtenerUsuariosHTTP = async () => {
         let response = await fetch("/api/usuarios")
         const data = await response.json()
-        return data
+        return data 
     }
 
     const obtenerTecnologiasHTTP = async () => {
