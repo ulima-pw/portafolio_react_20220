@@ -90,7 +90,7 @@ const ProyectoModal = (props) => {
                         }
                     </select>
                 </div>
-                <div>
+                <div> 
                     <label className="form-label">
                         Rating
                     </label>
