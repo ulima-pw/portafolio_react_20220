@@ -106,7 +106,7 @@ const ProyectoModal = (props) => {
                         onChange={ listaTecnologiasOnChange } multiple>
                         {
                             props.tecnologias.map((tecnologia) => {
-                                return <option value={ tecnologia.id }>
+                                return <option value={ tecnologia.id } key={ tecnologia.id }>
                                     {tecnologia.nombre }
                                 </option>
                             })
